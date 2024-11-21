@@ -31,7 +31,7 @@ const sessionOptions = {
   }
   
   app.use(
-    session(sessionOptions)
+    session(session(sessionOptions))
   );
   
 app.use(express.json());
