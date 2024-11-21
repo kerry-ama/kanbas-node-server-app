@@ -55,6 +55,7 @@ export default function CourseRoutes(app) {
     const enrollments = dao.findCoursesForEnrolledUser(userId);
     res.send(enrollments);
   })
+ 
 
 
 
