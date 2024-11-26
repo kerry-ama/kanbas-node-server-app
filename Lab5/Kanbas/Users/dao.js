@@ -1,4 +1,5 @@
-import db from "../Database/index.js";
+//import db from "../Database/index.js";
+import model from "./model.js";
 let { users } = db;
 export const createUser = (user) => {
  const newUser = { ...user, _id: Date.now() };
@@ -12,4 +13,7 @@ export const findUserByCredentials = (username, password) =>
     users.find( (user) => user.username === username && user.password === password );
   export const updateUser = (userId, user) => (users = users.map((u) => (u._id === userId ? user : u)));
   export const deleteUser = (userId) => (users = users.filter((u) => u._id !== userId));
+
+
+  
   
