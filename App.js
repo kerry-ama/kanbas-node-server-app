@@ -10,7 +10,10 @@ import CourseRoutes from "./Lab5/Kanbas/Courses/routes.js";
 import ModuleRoutes from "./Lab5/Kanbas/Modules/routes.js";
 import AssignmentRoutes from "./Lab5/Kanbas/Assignments/routes.js";
 import EnrollmentRoutes from "./Lab5/Kanbas/Enrollments/routes.js";
+import mongoose from "mongoose";
 
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
+mongoose.connect(CONNECTION_STRING);
 const app = express();
 app.use(cors({
     credentials: true,
