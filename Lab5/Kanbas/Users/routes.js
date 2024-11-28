@@ -32,6 +32,7 @@ export default function UserRoutes(app) {
   const createUser = async (req, res) => { 
     const user = await dao.createUser(req.body);
     res.json(user);};
+
   const deleteUser = async (req, res) => {
     const status = await dao.deleteUser(req.params.userId);
     res.json(status);
@@ -100,17 +101,22 @@ export default function UserRoutes(app) {
     //currentUser = null;
     res.sendStatus(200);
   };
-  const findCoursesForEnrolledUser = (req, res) => {
+  const findCoursesForEnrolledUser = async (req, res) => {
     let { userId } = req.params;
+    console.log("USERS", userId)
     if (userId === "current") {
       const currentUser = req.session["currentUser"];
+      console.log("108", currentUser)
       if (!currentUser) {
         res.sendStatus(401);
         return;
       }
       userId = currentUser._id;
     }
+    //TA HELP: BELOW CORRECT BUT NOT WORKING
     const courses = courseDao.findCoursesForEnrolledUser(userId);
+    //const courses = await courseDao.findAllCourses();
+    console.log("BACKEND", courses)
     res.json(courses);
   };
   app.get("/api/users/:userId/courses", findCoursesForEnrolledUser);

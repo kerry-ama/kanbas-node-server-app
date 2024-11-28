@@ -1,16 +1,28 @@
 import Database from "../Database/index.js";
+import model from "./model.js";
 import { getAllEnrollments } from "../Enrollments/dao.js";
+
 export function findAllCourses() {
+  console.log("RANDOM")
+  //return model.find();
   return Database.courses;
 }
+  
 export function findCoursesForEnrolledUser(userId) {
     const { courses } = Database;
+    console.log(userId)
+    //const { courses } = findAllCourses();
+    console.log("COURSE", courses)
     const enrollments = getAllEnrollments();
+    console.log("ENROLLL", enrollments)
     const enrolledCourses = courses.filter((course) =>
       enrollments.some((enrollment) => enrollment.user === userId && enrollment.course === course._id));
     return enrolledCourses;
   }
   export function createCourse(course) {
+    // delete course._id;
+    // return model.create(course); //inserts record into database
+
     const newCourse = { ...course, _id: Date.now().toString() };
     Database.courses = [...Database.courses, newCourse];
     return newCourse;
