@@ -1,32 +1,25 @@
 import Database from "../Database/index.js";
 import model from "./model.js";
-import { getAllEnrollments } from "../Enrollments/dao.js";
+//import { getAllEnrollments } from "../Enrollments/dao.js";
 
 export function findAllCourses() {
-  console.log("RANDOM")
-  //return model.find();
-  return Database.courses;
+  return model.find();
+  //return Database.courses;
 }
   
-export function findCoursesForEnrolledUser(userId) {
-    const { courses } = Database;
-    console.log(userId)
-    //const { courses } = findAllCourses();
-    console.log("COURSE", courses)
-    const enrollments = getAllEnrollments();
-    console.log("ENROLLL", enrollments)
-    const enrolledCourses = courses.filter((course) =>
-      enrollments.some((enrollment) => enrollment.user === userId && enrollment.course === course._id));
-    return enrolledCourses;
-  }
   export function createCourse(course) {
-    // delete course._id;
-    // return model.create(course); //inserts record into database
+    delete course._id;
+    return model.create(course); //inserts record into database
 
-    const newCourse = { ...course, _id: Date.now().toString() };
-    Database.courses = [...Database.courses, newCourse];
-    return newCourse;
+    // const newCourse = { ...course, _id: Date.now().toString() };
+    // Database.courses = [...Database.courses, newCourse];
+    // return newCourse;
   }
+
+  export function deleteCourse(courseId) {
+    return model.deleteOne({ _id: courseId });
+   }
+/*   
   export function deleteCourse(courseId) {
     const { courses } = Database;
     const enrollments= getAllEnrollments();
@@ -34,12 +27,15 @@ export function findCoursesForEnrolledUser(userId) {
     Database.enrollments = enrollments.filter(
       (enrollment) => enrollment.course !== courseId
   );}
+  */
 
   export function updateCourse(courseId, courseUpdates) {
-    const { courses } = Database;
-    const course = courses.find((course) => course._id === courseId);
-    Object.assign(course, courseUpdates);
-    return course;
+    return model.updateOne({ _id: courseId }, courseUpdates);
+
+    // const { courses } = Database;
+    // const course = courses.find((course) => course._id === courseId);
+    // Object.assign(course, courseUpdates);
+    // return course;
   }
 
   
